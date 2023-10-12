@@ -1,11 +1,11 @@
 import { Box, Button, Spacer, Stack } from "@chakra-ui/react";
 import { FaShoppingBasket, FaTshirt } from "react-icons/fa";
 
-import NavItem from "./NavItem";
+import { NavItem } from "./NavItem";
 import { useContext } from "react";
 import { UserContext } from "../../shared/context/UserContext";
 
-export default function NavItems({ isOpen }) {
+export const NavItems = ({ isOpen }) => {
   let { user } = useContext(UserContext);
 
   const handleLogout = () => {
@@ -47,4 +47,4 @@ export default function NavItems({ isOpen }) {
       </Stack>
     </Box>
   );
-}
+};
