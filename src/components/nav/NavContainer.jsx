@@ -1,6 +1,6 @@
 import { Flex } from "@chakra-ui/react";
 
-export default function NavContainer({ children }) {
+export const NavContainer = ({ children }) => {
   return (
     <Flex
       as="nav"
@@ -16,4 +16,4 @@ export default function NavContainer({ children }) {
       {children}
     </Flex>
   );
-}
+};

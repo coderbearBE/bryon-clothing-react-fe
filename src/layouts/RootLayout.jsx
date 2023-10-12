@@ -1,9 +1,9 @@
-import { Grid, GridItem, Text } from "@chakra-ui/react";
+import { Grid, GridItem } from "@chakra-ui/react";
 import * as R from "ramda";
-import { Suspense, useContext } from "react";
+import { useContext } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
-import Nav from "../components/nav/Nav";
+import { Nav } from "../components/nav";
 import { UserContext } from "../shared/context/UserContext";
 
 export default function RootLayout() {

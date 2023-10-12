@@ -1,11 +1,11 @@
 import { useState } from "react";
 
-import Logo from "./Logo";
-import MenuToggle from "./MenuToggle";
-import NavContainer from "./NavContainer";
-import NavItems from "./NavItems";
+import { Logo } from "./Logo";
+import { MenuToggle } from "./MenuToggle";
+import { NavContainer } from "./NavContainer";
+import { NavItems } from "./NavItems";
 
-export default function Nav() {
+export const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
@@ -17,4 +17,4 @@ export default function Nav() {
       <NavItems isOpen={isOpen} />
     </NavContainer>
   );
-}
+};
