@@ -61,7 +61,7 @@ export default function Login() {
   };
 
   return (
-    <Center h="100vh" bg="blue.600">
+    <Center h="100vh" bg="darkerBlue">
       <Card shadow="2xl" bg="gray.50" m="15px">
         <CardBody>
           <VStack spacing="40px" align="stretch">

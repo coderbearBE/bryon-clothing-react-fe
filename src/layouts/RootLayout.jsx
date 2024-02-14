@@ -19,14 +19,14 @@ export default function RootLayout() {
             as="aside"
             colSpan={{ base: 6, lg: 1 }}
             minH={{ lg: "100vh" }}
-            bg="blue.300"
+            bg="darkerBlue"
           >
             <Nav />
           </GridItem>
           <GridItem
             as="main"
             colSpan={{ base: 6, lg: 5 }}
-            bg="blue.600"
+            bg="gray.50"
             minH="100vh"
             p="50px"
           >
