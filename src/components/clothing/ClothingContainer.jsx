@@ -6,7 +6,7 @@ export const ClothingContainer = ({ children }) => {
       direction="column"
       aligng="stretch"
       wrap="wrap"
-      bg="white"
+      bg="lightGray"
       borderRadius="md"
       p={8}
       boxShadow="2xl"
@@ -14,4 +14,4 @@ export const ClothingContainer = ({ children }) => {
       {children}
     </Flex>
   );
-}
+};

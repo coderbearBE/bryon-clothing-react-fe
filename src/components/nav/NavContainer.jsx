@@ -9,8 +9,8 @@ export const NavContainer = ({ children }) => {
       wrap="wrap"
       w="100%"
       mb={8}
-      p={8}
-      bg="blue.300"
+      px={3}
+      bg="darkerBlue"
       color="white"
     >
       {children}
