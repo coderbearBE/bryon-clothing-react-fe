@@ -1,6 +1,7 @@
 import * as R from "ramda";
 import { createContext, useEffect, useState } from "react";
-import { useAxios } from '../../hooks';
+
+import { useAxios } from "../../hooks";
 
 export const UserContext = createContext({
   user: {},
@@ -9,7 +10,6 @@ export const UserContext = createContext({
 
 export default function UserContextProvider({ children }) {
   const [user, setUser] = useState({});
-  
   const { post } = useAxios();
 
   useEffect(() => {
@@ -17,11 +17,13 @@ export default function UserContextProvider({ children }) {
     const authUser = JSON.parse(storedUser);
 
     if (!R.isEmpty(authUser)) setUser({ ...user, ...authUser });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleLogin = async (userData) => {
     try {
       const apiResponse = await post(`/users/login`, userData);
+
       setUser({ ...user, ...apiResponse });
       localStorage.setItem("authUser", JSON.stringify(apiResponse));
     } catch (error) {
