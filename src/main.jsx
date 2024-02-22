@@ -9,7 +9,7 @@ const theme = extendTheme({
     fluoPink: "#FF70C5",
     darkerBlue: " #161F32",
     lighterBlue: "#535B6F",
-    lightGray: "#F7F7FB",
+    lightGray: "#ECEDEE",
   },
 });
 
