@@ -71,7 +71,7 @@ export default function Login() {
                 alt="BRYON"
                 objectFit="contain"
                 p="25px"
-                bg="blue.300"
+                bg="gray.300"
               />
             </Box>
 
