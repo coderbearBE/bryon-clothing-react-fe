@@ -1,8 +1,8 @@
 import { useContext } from "react";
+import { Navigate } from "react-router-dom";
 import * as R from "ramda";
 
 import { UserContext } from "../../shared/context/UserContext";
-import { Navigate } from "react-router-dom";
 
 export const AuthorizedRoute = ({ children }) => {
   const { user } = useContext(UserContext);

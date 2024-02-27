@@ -4,12 +4,12 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
-import Login from "./pages/Login";
+import { AuthorizedRoute } from "./components/routing/";
 import RootLayout from "./layouts/RootLayout";
 import Clothing from "./pages/Clothing";
+import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import Orders from "./pages/Orders";
-import { AuthorizedRoute } from "./components/routing/";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
