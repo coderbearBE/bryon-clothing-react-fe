@@ -10,7 +10,6 @@ import Clothing from "./pages/Clothing";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import Orders from "./pages/Orders";
-import { AuthorizedRoute } from "./components/routing/";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
