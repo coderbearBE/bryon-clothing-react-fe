@@ -29,6 +29,7 @@ export default function RootLayout() {
             colSpan={{ base: 6, lg: 5 }}
             bg="white"
             minH="100vh"
+            p="50px"
           >
             <Profile />
             <Box mt={6} px={14}>
