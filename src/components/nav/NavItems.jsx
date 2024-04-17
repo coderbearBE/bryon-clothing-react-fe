@@ -38,7 +38,7 @@ export const NavItems = ({ isOpen }) => {
           borderRadius="none"
           bg="fluoPink"
           color="white"
-          w={{ base: "full", md: "150px", lg: "full" }}
+          w={{ base: "full", md: "250px", lg: "250px" }}
           _hover={{ opacity: 0.75 }}
           onClick={handleLogout}
         >
