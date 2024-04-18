@@ -20,7 +20,12 @@ import useSWR from "swr";
 import { useAxios } from "../../hooks";
 import { SlideIn } from "../../shared/components";
 import { UserContext } from "../../shared/context/UserContext";
-import { sizes } from "../../shared/constants/enums";
+import {
+  accessorySizes,
+  shoeSizes,
+  sizes,
+  underwearSizes,
+} from "../../shared/constants";
 
 export const ClothingList = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -48,6 +53,51 @@ export const ClothingList = () => {
   }, [clothingItems]);
 
   const toggleSlideIn = () => setIsOpen(!isOpen);
+
+  const renderSelectOptions = (item) => {
+    switch (item.clothingType) {
+      case "ACCESSORY":
+        return (
+          <>
+            {accessorySizes.map((size) => (
+              <option key={size} value={size}>
+                {size}
+              </option>
+            ))}
+          </>
+        );
+      case "FOOTWEAR":
+        return (
+          <>
+            {shoeSizes.map((size) => (
+              <option key={size} value={size}>
+                {size}
+              </option>
+            ))}
+          </>
+        );
+      case "UNDERWEAR":
+        return (
+          <>
+            {underwearSizes.map((size) => (
+              <option key={size} value={size}>
+                {size}
+              </option>
+            ))}
+          </>
+        );
+      default:
+        return (
+          <>
+            {sizes.map((size) => (
+              <option key={size} value={size}>
+                {size}
+              </option>
+            ))}
+          </>
+        );
+    }
+  };
 
   const handleOrderSubmit = (orderData) => {
     console.log("Order preview (keys)", Object.keys(orderData));
@@ -82,11 +132,7 @@ export const ClothingList = () => {
                     placeholder="Maat.."
                     {...register(`${item.id}.size`)}
                   >
-                    {sizes.map((size) => (
-                      <option key={size} value={size}>
-                        {size}
-                      </option>
-                    ))}
+                    {renderSelectOptions(item)}
                   </Select>
 
                   <NumberInput
