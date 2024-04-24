@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   HStack,
   Heading,
@@ -30,7 +31,7 @@ import {
 export const ClothingList = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [filteredClothingItems, setFilteredClothingItems] = useState([]);
-  // const [currentOrder, setCurrentOrder] = useState({});
+  const [currentOrderItems, setCurrentOrderItems] = useState([]);
 
   const { get } = useAxios();
   const { user } = useContext(UserContext);
@@ -99,14 +100,26 @@ export const ClothingList = () => {
     }
   };
 
-  const handleOrderSubmit = (orderData) => {
-    console.log("Order preview (keys)", Object.keys(orderData));
-    console.log("Order preview (values)", Object.values(orderData));
-    console.log("Order preview (entries)", Object.entries(orderData));
-    const filtered = Object.entries(orderData).filter(
-      (entry) => entry[1] !== "0"
+  const transformFormData = (formData) => {
+    let order = [];
+    for (const item of formData) {
+      const orderedItem = clothingItems.find(
+        (clothingItem) => clothingItem.productCode === item[0]
+      );
+      order = [...order, { ...orderedItem, ...item[1] }];
+    }
+
+    return order;
+  };
+
+  const handleOrderSubmit = (formData) => {
+    const formDataWithSizeAndQuantity = Object.entries(formData).filter(
+      (entry) => !R.isEmpty(entry[1].size) && entry[1].quantity !== "0"
     );
-    // TODO setCurrentOrder and pass it to SlideIn component
+
+    const orderList = transformFormData(formDataWithSizeAndQuantity);
+    setCurrentOrderItems(orderList);
+
     toggleSlideIn();
   };
 
@@ -130,7 +143,7 @@ export const ClothingList = () => {
                   <Select
                     w="120px"
                     placeholder="Maat.."
-                    {...register(`${item.id}.size`)}
+                    {...register(`${item.productCode}.size`)}
                   >
                     {renderSelectOptions(item)}
                   </Select>
@@ -142,7 +155,7 @@ export const ClothingList = () => {
                     precision={0}
                     size="sm"
                     maxW={16}
-                    {...register(`${item.id}.quantity`)}
+                    {...register(`${item.productCode}.quantity`)}
                   >
                     <NumberInputField />
                     <NumberInputStepper>
@@ -154,21 +167,28 @@ export const ClothingList = () => {
               </Stack>
             </div>
           ))}
-          <Button
-            type="submit"
-            bg="fluoPink"
-            color="white"
-            size="md"
-            w={["full", "150px", "150px", "150px"]}
-            borderRadius="none"
-            _hover={{ opacity: 0.75 }}
-          >
-            Bevestigen
-          </Button>
+          <Box>
+            <Button
+              type="submit"
+              bg="fluoPink"
+              color="white"
+              size="md"
+              w={["full", "150px", "150px", "150px"]}
+              mt={12}
+              borderRadius="none"
+              _hover={{ opacity: 0.75 }}
+            >
+              Bevestigen
+            </Button>
+          </Box>
         </VStack>
       </form>
 
-      <SlideIn isOpen={isOpen} toggle={toggleSlideIn} />
+      <SlideIn
+        isOpen={isOpen}
+        toggle={toggleSlideIn}
+        orderedItems={currentOrderItems}
+      />
     </>
   );
 };
