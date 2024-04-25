@@ -20,7 +20,6 @@ export const SlideIn = ({ isOpen, orderedItems, toggle }) => {
 
   useEffect(() => {
     if (orderedItems.length !== 0) {
-      console.log(orderedItems);
       let amount = 0;
       for (const item of orderedItems) {
         amount = amount + item.quantity * item.price;
