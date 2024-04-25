@@ -48,54 +48,58 @@ export const SlideIn = ({ isOpen, orderedItems, toggle }) => {
         shadow="2xl"
       >
         <Heading mb={12}>Overzicht</Heading>
-        <VStack spacing={4} w="full" alignItems="start">
+        <VStack w="full" alignItems="start">
           {orderedItems.length !== 0 ? (
             <>
-              {orderedItems.map((item) => (
-                <HStack key={item.id} w="full" justify="space-between">
-                  <Box>
-                    <Text>
-                      {item.quantity}x {item.descriptionBryon}
-                    </Text>
+              <Box mb={12} w="full">
+                {orderedItems.map((item) => (
+                  <HStack key={item.id} mb={4} w="full" justify="space-between">
+                    <Box>
+                      <Text>
+                        {item.quantity}x {item.descriptionBryon}
+                      </Text>
 
-                    <Text>
-                      <b>Maat: </b>
-                      {item.size}
-                    </Text>
-                  </Box>
+                      <Text>
+                        <b>Maat: </b>
+                        {item.size}
+                      </Text>
+                    </Box>
 
-                  <Text>{(item.quantity * item.price).toFixed(2)} EUR</Text>
+                    <Text>{(item.quantity * item.price).toFixed(2)} EUR</Text>
+                  </HStack>
+                ))}
+              </Box>
+
+              <VStack bg="lightGray" px={4} py={6} w="full">
+                <HStack w="full" justify="space-between">
+                  <Text fontWeight="bold" fontSize="lg">
+                    Totaalbedrag bestelling:
+                  </Text>
+                  <Text>{totalAmount.toFixed(2)} EUR</Text>
                 </HStack>
-              ))}
 
-              <HStack pt={24} w="full" justify="space-between">
-                <Text fontWeight="bold" fontSize="lg">
-                  Totaalbedrag bestelling:
-                </Text>
-                <Text>{totalAmount.toFixed(2)} EUR</Text>
-              </HStack>
-
-              <HStack w="full" justify="space-between">
-                <Text fontWeight="bold" fontSize="lg">
-                  Jouw budget:
-                </Text>
-                <Text>{user.budget.toFixed(2)} EUR</Text>
-              </HStack>
-
-              <HStack w="full" justify="space-between">
-                {restAmount < 0 ? (
-                  <Text color="tomato" fontWeight="bold" fontSize="lg">
-                    Te betalen
+                <HStack w="full" justify="space-between">
+                  <Text fontWeight="bold" fontSize="lg">
+                    Jouw budget:
                   </Text>
-                ) : (
-                  <Text color="green" fontWeight="bold" fontSize="lg">
-                    Overig budget
+                  <Text>{user.budget.toFixed(2)} EUR</Text>
+                </HStack>
+
+                <HStack w="full" justify="space-between">
+                  {restAmount < 0 ? (
+                    <Text color="tomato" fontWeight="bold" fontSize="lg">
+                      Te betalen
+                    </Text>
+                  ) : (
+                    <Text color="green" fontWeight="bold" fontSize="lg">
+                      Overig budget
+                    </Text>
+                  )}
+                  <Text fontWeight="bold">
+                    {Math.abs(restAmount).toFixed(2)} EUR
                   </Text>
-                )}
-                <Text fontWeight="bold">
-                  {Math.abs(restAmount).toFixed(2)} EUR
-                </Text>
-              </HStack>
+                </HStack>
+              </VStack>
             </>
           ) : (
             <>
