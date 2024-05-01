@@ -1,4 +1,5 @@
 import axios from "axios";
+import * as R from "ramda";
 
 export const AxiosInstance = () => {
   const axiosApiRequest = axios.create({
@@ -7,13 +8,15 @@ export const AxiosInstance = () => {
 
   axiosApiRequest.interceptors.request.use(
     (request) => {
-      const authenticatedUser = JSON.parse(localStorage.getItem("authUser"));
-
       request.headers["Accept"] = "application/json";
       request.headers["Accept-language"] = "nl";
-      request.headers[
-        "Authorization"
-      ] = `Bearer ${authenticatedUser.accesstoken}`;
+
+      if (!R.isNil(localStorage.getItem("authUser"))) {
+        const authenticatedUser = JSON.parse(localStorage.getItem("authUser"));
+        request.headers[
+          "Authorization"
+        ] = `Bearer ${authenticatedUser.accesstoken}`;
+      }
 
       return request;
     },
