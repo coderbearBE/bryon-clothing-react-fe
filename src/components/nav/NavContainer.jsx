@@ -1,6 +1,6 @@
 import { Flex } from "@chakra-ui/react";
 
-export default function NavContainer({ children }) {
+export const NavContainer = ({ children }) => {
   return (
     <Flex
       as="nav"
@@ -9,11 +9,11 @@ export default function NavContainer({ children }) {
       wrap="wrap"
       w="100%"
       mb={8}
-      p={8}
-      bg="blue.300"
+      px={3}
+      bg="darkerBlue"
       color="white"
     >
       {children}
     </Flex>
   );
-}
+};

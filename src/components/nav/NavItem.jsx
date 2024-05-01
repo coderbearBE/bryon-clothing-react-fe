@@ -1,8 +1,7 @@
 import { HStack, Icon, Text } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 
-export default function NavItem({ children, icon, to }) {
-  // const activeColor = "RGBA(25, 25, 25, 0.5)";
+export const NavItem = ({ children, icon, to }) => {
   const activeColor = "#F7F0F0";
 
   return (
@@ -11,7 +10,9 @@ export default function NavItem({ children, icon, to }) {
       style={({ isActive }) => {
         return {
           color: isActive ? activeColor : "white",
-          boxShadow: isActive ? `0 2px 0 ${activeColor}` : "",
+          backgroundColor: isActive ? "#535B6F" : "",
+          width: "100%",
+          padding: ".2rem 1rem",
         };
       }}
     >
@@ -23,4 +24,4 @@ export default function NavItem({ children, icon, to }) {
       </HStack>
     </NavLink>
   );
-}
+};

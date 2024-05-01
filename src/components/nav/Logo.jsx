@@ -1,6 +1,6 @@
 import { Box, Image } from "@chakra-ui/react";
 
-export default function Logo() {
+export const Logo = () => {
   return (
     <Box mx="auto">
       <Image
