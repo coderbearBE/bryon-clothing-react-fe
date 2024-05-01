@@ -3,14 +3,11 @@ import {
   Button,
   HStack,
   Heading,
-  NumberDecrementStepper,
-  NumberIncrementStepper,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
+  Input,
   Select,
   Stack,
   Text,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 import * as R from "ramda";
@@ -32,15 +29,24 @@ export const ClothingList = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [filteredClothingItems, setFilteredClothingItems] = useState([]);
   const [currentOrderItems, setCurrentOrderItems] = useState([]);
+  const [totalAmount, setTotalAmount] = useState(0);
+  const [restAmount, setRestAmount] = useState(0);
 
-  const { get } = useAxios();
+  const { get, post } = useAxios();
   const { user } = useContext(UserContext);
   const { data: clothingItems } = useSWR(
     "/products",
     async (path) => await get(path),
     { suspense: true }
   );
-  const { handleSubmit, register } = useForm();
+  const {
+    formState: { errors },
+    handleSubmit,
+    register,
+    reset,
+  } = useForm();
+
+  const toast = useToast();
 
   useEffect(() => {
     if (clothingItems.length !== 0) {
@@ -52,6 +58,21 @@ export const ClothingList = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clothingItems]);
+
+  useEffect(() => {
+    if (currentOrderItems.length !== 0) {
+      let amount = 0;
+      for (const item of currentOrderItems) {
+        amount = amount + item.quantity * item.price;
+      }
+
+      setTotalAmount(amount);
+
+      const rest = user.budget - amount;
+      setRestAmount(rest);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentOrderItems]);
 
   const toggleSlideIn = () => setIsOpen(!isOpen);
 
@@ -112,9 +133,9 @@ export const ClothingList = () => {
     return order;
   };
 
-  const handleOrderSubmit = (formData) => {
+  const handleOrderOverview = (formData) => {
     const formDataWithSizeAndQuantity = Object.entries(formData).filter(
-      (entry) => !R.isEmpty(entry[1].size) && entry[1].quantity !== "0"
+      (entry) => !R.isEmpty(entry[1].size) && entry[1].quantity !== 0
     );
 
     const orderList = transformFormData(formDataWithSizeAndQuantity);
@@ -123,9 +144,49 @@ export const ClothingList = () => {
     toggleSlideIn();
   };
 
+  const handleOrderSubmit = async () => {
+    const owner = {
+      firstname: user.firstname,
+      lastname: user.lastname,
+      email: user.email,
+      budget: user.budget,
+    };
+
+    const order = {
+      owner,
+      year: new Date().getFullYear(),
+      products: currentOrderItems,
+      totalAmount,
+      restAmount,
+    };
+
+    try {
+      await post("/orders", order);
+
+      toast({
+        title: "Bedankt voor je bestelling!",
+        status: "success",
+        duration: 5000,
+        position: "bottom-left",
+        variant: "left-accent",
+      });
+    } catch (error) {
+      toast({
+        title: "Je hebt al een bestelling gemaakt voor dit jaar.",
+        status: "error",
+        duration: 5000,
+        position: "bottom-left",
+        variant: "left-accent",
+      });
+    }
+
+    reset();
+    toggleSlideIn();
+  };
+
   return (
     <>
-      <form onSubmit={handleSubmit(handleOrderSubmit)}>
+      <form onSubmit={handleSubmit(handleOrderOverview)}>
         <VStack spacing={4} w="full" h="full" align="stretch">
           <Heading mb={4}>Kledij Bryon (Doltcini)</Heading>
 
@@ -147,26 +208,41 @@ export const ClothingList = () => {
                   >
                     {renderSelectOptions(item)}
                   </Select>
-
-                  <NumberInput
-                    defaultValue={0}
-                    min={0}
-                    max={15}
-                    precision={0}
-                    size="sm"
-                    maxW={16}
-                    {...register(`${item.productCode}.quantity`)}
-                  >
-                    <NumberInputField />
-                    <NumberInputStepper>
-                      <NumberIncrementStepper>+</NumberIncrementStepper>
-                      <NumberDecrementStepper>-</NumberDecrementStepper>
-                    </NumberInputStepper>
-                  </NumberInput>
+                  <Input
+                    type="number"
+                    w="80px"
+                    focusBorderColor="blackAlpha.300"
+                    placeholder="0 - 15"
+                    _placeholder={{ color: "blackAlpha.900" }}
+                    {...register(`${item.productCode}.quantity`, {
+                      min: 0,
+                      max: 15,
+                      value: 0,
+                      valueAsNumber: true,
+                    })}
+                  />
                 </HStack>
               </Stack>
             </div>
           ))}
+
+          {!R.isEmpty(errors) && (
+            <Box
+              as="p"
+              px={4}
+              py={2}
+              bg="red.100"
+              color="red.500"
+              border="2px"
+              borderColor="red.500"
+              fontSize="large"
+              fontStyle="italic"
+              fontWeight="bold"
+            >
+              Vul een getal tussen 0 en 15 in
+            </Box>
+          )}
+
           <Box>
             <Button
               type="submit"
@@ -174,7 +250,7 @@ export const ClothingList = () => {
               color="white"
               size="md"
               w={["full", "150px", "150px", "150px"]}
-              mt={12}
+              mt={6}
               borderRadius="none"
               _hover={{ opacity: 0.75 }}
             >
@@ -188,6 +264,10 @@ export const ClothingList = () => {
         isOpen={isOpen}
         toggle={toggleSlideIn}
         orderedItems={currentOrderItems}
+        submitOrder={handleOrderSubmit}
+        totalAmount={totalAmount}
+        restAmount={restAmount}
+        userBudget={user.budget}
       />
     </>
   );

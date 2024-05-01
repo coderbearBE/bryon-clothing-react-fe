@@ -6,13 +6,16 @@ export const AxiosInstance = () => {
   });
 
   axiosApiRequest.interceptors.request.use(
-    (apiConfig) => {
-      const bryonApiConfig = { ...apiConfig };
+    (request) => {
+      const authenticatedUser = JSON.parse(localStorage.getItem("authUser"));
 
-      bryonApiConfig.headers["Accept"] = "application/json";
-      bryonApiConfig.headers["Accept-language"] = "nl";
+      request.headers["Accept"] = "application/json";
+      request.headers["Accept-language"] = "nl";
+      request.headers[
+        "Authorization"
+      ] = `Bearer ${authenticatedUser.accesstoken}`;
 
-      return bryonApiConfig;
+      return request;
     },
     (error) => Promise.reject(error)
   );
