@@ -20,7 +20,7 @@ export const MyOrderOverview = () => {
 
     try {
       const myOrder = await post("/orders/current", { owner });
-      console.log("==MY ORDER==", myOrder);
+
       setOrderData(myOrder);
     } catch (error) {
       console.error(error);
