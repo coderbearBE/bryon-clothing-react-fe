@@ -1,2 +1,1 @@
-export * from './ClothingContainer';
-export * from './ClothingList';
+export * from "./ClothingList";
