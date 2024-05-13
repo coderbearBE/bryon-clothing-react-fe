@@ -2,10 +2,10 @@ import { Center, Spinner } from "@chakra-ui/react";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
-import { ClothingList } from "../components/clothing";
+import { MyOrderOverview } from "../components/orders";
 import { ErrorFallback, PageContainer } from "../shared/components";
 
-export default function Clothing() {
+export default function MyOrder() {
   return (
     <>
       <PageContainer>
@@ -22,7 +22,7 @@ export default function Clothing() {
               </Center>
             }
           >
-            <ClothingList />
+            <MyOrderOverview />
           </Suspense>
         </ErrorBoundary>
       </PageContainer>
