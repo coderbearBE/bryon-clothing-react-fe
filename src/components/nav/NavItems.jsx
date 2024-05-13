@@ -28,6 +28,9 @@ export const NavItems = ({ isOpen }) => {
         <NavItem to="/clothing" icon={FaTshirt}>
           Kledij
         </NavItem>
+        <NavItem to="/order" icon={FaShoppingBasket}>
+          Mijn bestelling
+        </NavItem>
         {user.role !== "MEMBER" && (
           <NavItem to="/orders" icon={FaShoppingBasket}>
             Orders
