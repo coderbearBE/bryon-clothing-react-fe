@@ -52,7 +52,8 @@ export const ClothingList = () => {
     if (clothingItems.length !== 0) {
       setFilteredClothingItems(
         clothingItems.filter(
-          (item) => R.isNil(item.retailFor) || item.retailFor === user.gender
+          (item) =>
+            item.retailFor === "DEFAULT" || item.retailFor === user.gender
         )
       );
     }
