@@ -10,7 +10,7 @@ import Clothing from "./pages/Clothing";
 import Login from "./pages/Login";
 import MyOrder from "./pages/MyOrder";
 import NotFound from "./pages/NotFound";
-import Orders from "./pages/Orders";
+import Lists from "./pages/Lists";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -20,10 +20,10 @@ const router = createBrowserRouter(
         <Route path="clothing" index element={<Clothing />} />
         <Route path="order" element={<MyOrder />} />
         <Route
-          path="orders"
+          path="lists"
           element={
             <AuthorizedRoute>
-              <Orders />
+              <Lists />
             </AuthorizedRoute>
           }
         />
