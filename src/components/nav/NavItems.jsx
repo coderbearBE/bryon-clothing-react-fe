@@ -1,5 +1,5 @@
 import { Box, Button, Spacer, Stack } from "@chakra-ui/react";
-import { FaShoppingBasket, FaTshirt } from "react-icons/fa";
+import { FaFileDownload, FaShoppingBasket, FaTshirt } from "react-icons/fa";
 
 import { NavItem } from "./NavItem";
 import { useContext } from "react";
@@ -32,8 +32,8 @@ export const NavItems = ({ isOpen }) => {
           Mijn bestelling
         </NavItem>
         {user.role !== "MEMBER" && (
-          <NavItem to="/orders" icon={FaShoppingBasket}>
-            Orders
+          <NavItem to="/lists" icon={FaFileDownload}>
+            Lijsten
           </NavItem>
         )}
         <Spacer />
