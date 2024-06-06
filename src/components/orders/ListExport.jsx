@@ -9,7 +9,7 @@ export const ListExport = () => (
   <>
     <Heading mb={12}>Download lijsten</Heading>
     <HStack w="50%">
-      <PDFDownloadLink document={<PDFBryon />} fileName="bryon.pdf">
+      <PDFDownloadLink document={<PDFBryon />} fileName="orders_bryon.pdf">
         <Button
           leftIcon={<DownloadIcon />}
           bg="fluoPink"
@@ -23,7 +23,7 @@ export const ListExport = () => (
           BCT orders
         </Button>
       </PDFDownloadLink>
-      <PDFDownloadLink document={<PDFDoltcini />} fileName="Doltcini_order.pdf">
+      <PDFDownloadLink document={<PDFDoltcini />} fileName="order_doltcini.pdf">
         <Button
           leftIcon={<DownloadIcon />}
           bg="fluoPink"
