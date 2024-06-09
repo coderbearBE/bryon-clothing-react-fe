@@ -27,6 +27,7 @@ export default function Login() {
   const { login } = useContext(UserContext);
   const [loginError, setLoginError] = useState("");
   const [show, setShow] = useState(false);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
   const navigate = useNavigate();
 
   const loginSchema = z.object({
@@ -52,7 +53,9 @@ export default function Login() {
 
   const handleLogin = async (userLogin) => {
     try {
+      setIsLoggingIn(true);
       await login(userLogin);
+      setIsLoggingIn(false);
 
       return navigate("/clothing");
     } catch (error) {
@@ -136,6 +139,7 @@ export default function Login() {
                   color="white"
                   w="full"
                   _hover={{ opacity: 0.75 }}
+                  isDisabled={isLoggingIn}
                 >
                   Login
                 </Button>
