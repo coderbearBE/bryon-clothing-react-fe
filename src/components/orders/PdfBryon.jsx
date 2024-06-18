@@ -47,6 +47,8 @@ const styles = StyleSheet.create({
 
 export const PDFBryon = () => {
   const [orderList, setOrderList] = useState([]);
+  const [membershipFee, setMembershipFee] = useState(60);
+
   const { get } = useAxios();
 
   const fetchBryonOrders = useCallback(async () => {
@@ -127,6 +129,9 @@ export const PDFBryon = () => {
                   </View>
                   <View style={styles.row}>
                     <Text>Budget: {owner.budget.toFixed(2)} EUR</Text>
+                  </View>
+                  <View style={styles.row}>
+                    <Text>Lidgeld Bryon: {membershipFee.toFixed(2)} EUR</Text>
                   </View>
                   <View style={styles.row}>
                     <Text>

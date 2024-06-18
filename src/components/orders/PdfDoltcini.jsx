@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
 export const PDFDoltcini = () => {
   const [order, setOrder] = useState([]);
   const [orderTotalPrice, setOrderTotalPrice] = useState(0);
+  const [costDoltcini, setCostDoltcini] = useState(113.43);
 
   const { get } = useAxios();
 
@@ -149,11 +150,12 @@ export const PDFDoltcini = () => {
                   </Text>
                 </View>
                 <View style={styles.row}>
-                  <Text>Bijdrage Doltcini: 50.00 EUR</Text>
+                  <Text>Bijdrage Doltcini: {costDoltcini.toFixed(2)} EUR</Text>
                 </View>
                 <View style={styles.row}>
                   <Text>
-                    Eindtotaal: {(50 + orderTotalPrice).toFixed(2)} EUR
+                    Eindtotaal: {(costDoltcini + orderTotalPrice).toFixed(2)}{" "}
+                    EUR
                   </Text>
                 </View>
               </View>

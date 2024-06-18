@@ -31,7 +31,7 @@ export default function RootLayout() {
             minH="100vh"
           >
             <Profile />
-            <Box mt={6} px={14}>
+            <Box my={6} px={14}>
               <Outlet />
             </Box>
           </GridItem>
