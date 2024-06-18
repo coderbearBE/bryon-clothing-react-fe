@@ -7,6 +7,7 @@ import { UserContext } from "../../shared/context/UserContext";
 
 export const MyOrderOverview = () => {
   const [orderData, setOrderData] = useState({});
+  const [membershipFee, setMemberschipFee] = useState(60);
   const { post } = useAxios();
   const { user } = useContext(UserContext);
 
@@ -80,6 +81,14 @@ export const MyOrderOverview = () => {
               </Text>
 
               <Text>{orderData.owner.budget.toFixed(2)} EUR</Text>
+            </HStack>
+
+            <HStack pl={4} w="50%" justify="space-between">
+              <Text fontWeight="bold" fontSize="lg">
+                Lidgeld Bryon:
+              </Text>
+
+              <Text>{membershipFee.toFixed(2)} EUR</Text>
             </HStack>
 
             <HStack pl={4} w="50%" justify="space-between">
