@@ -11,6 +11,7 @@ import {
 
 export const SlideIn = ({
   isOpen,
+  membershipFee,
   orderedItems,
   restAmount,
   submitOrder,
@@ -66,6 +67,13 @@ export const SlideIn = ({
                   Jouw budget:
                 </Text>
                 <Text>{userBudget.toFixed(2)} EUR</Text>
+              </HStack>
+
+              <HStack w="full" justify="space-between">
+                <Text fontWeight="bold" fontSize="lg">
+                  Lidgeld Bryon:
+                </Text>
+                <Text>{membershipFee.toFixed(2)} EUR</Text>
               </HStack>
 
               <HStack w="full" justify="space-between">
