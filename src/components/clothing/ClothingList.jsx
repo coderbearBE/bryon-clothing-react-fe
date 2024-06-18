@@ -29,6 +29,7 @@ export const ClothingList = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [filteredClothingItems, setFilteredClothingItems] = useState([]);
   const [currentOrderItems, setCurrentOrderItems] = useState([]);
+  const [membershipFee, setMembershipFee] = useState(60);
   const [totalAmount, setTotalAmount] = useState(0);
   const [restAmount, setRestAmount] = useState(0);
 
@@ -69,7 +70,7 @@ export const ClothingList = () => {
 
       setTotalAmount(amount);
 
-      const rest = user.budget - amount;
+      const rest = user.budget - membershipFee - amount;
       setRestAmount(rest);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -266,6 +267,7 @@ export const ClothingList = () => {
         toggle={toggleSlideIn}
         orderedItems={currentOrderItems}
         submitOrder={handleOrderSubmit}
+        membershipFee={membershipFee}
         totalAmount={totalAmount}
         restAmount={restAmount}
         userBudget={user.budget}
