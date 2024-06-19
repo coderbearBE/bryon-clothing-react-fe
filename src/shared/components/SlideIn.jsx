@@ -25,6 +25,7 @@ export const SlideIn = ({
       top={0}
       right={0}
       bottom={0}
+      overflow="scroll"
       w={["300px", "300px", "500px", "750px"]}
       rounded="none"
       p="50px"
