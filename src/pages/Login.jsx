@@ -33,7 +33,7 @@ export default function Login() {
     email: z.string().email({ message: "Gebruik een correct email adres" }),
     password: z
       .string()
-      .min(5, { message: "Wachtwoord moet minstens 5 tekens lang zijn" }),
+      .min(3, { message: "Wachtwoord moet minstens 3 tekens lang zijn" }),
   });
 
   const {
