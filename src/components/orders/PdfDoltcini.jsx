@@ -6,46 +6,48 @@ import { useAxios } from "../../hooks";
 
 const styles = StyleSheet.create({
   page: {
-    fontSize: 11,
-    marginVertical: 50,
-    paddingHorizontal: 40,
+    padding: 40,
+    fontSize: 10,
+    fontFamily: 'Helvetica',
+    lineHeight: 1.4,
   },
-  spaceBetween: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-    justifyContent: "space-between",
-  },
-  flexEnd: {
-    flexDirection: "column",
-    alignItems: "flex-end",
-    justifyContent: "center",
-  },
-  row: {
-    paddingVertical: 4,
-    flexDirection: "row",
-  },
-  columnSmall: { flex: 0.75 },
-  columnLarge: { flex: 3 },
   title: {
     fontSize: 16,
-    marginBottom: 12,
+    marginBottom: 20,
+    textAlign: 'center',
+    fontWeight: 'bold',
   },
   thead: {
-    paddingHorizontal: 6,
-    paddingVertical: 12,
-    backgroundColor: "#161F32",
-    color: "#fff",
-    display: "flex",
+    flexDirection: 'row',
+    borderBottom: '1pt solid #000',
+    paddingBottom: 6,
+    marginBottom: 4,
+    fontWeight: 'bold',
   },
   tbody: {
-    paddingHorizontal: 6,
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: "#161F32",
+    marginBottom: 20,
   },
   tfooter: {
-    marginVertical: 12,
-    marginHorizontal: 12,
+    marginTop: 20,
+    paddingTop: 10,
+    borderTop: '1pt solid #000',
+  },
+  row: {
+    paddingVertical: 2,
+  },
+  spaceBetween: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 4,
+  },
+  columnLarge: {
+    flex: 3,
+  },
+  columnSmall: {
+    flex: 1.5,
+  },
+  flexEnd: {
+    alignItems: 'flex-end',
   },
 });
 
@@ -108,37 +110,33 @@ export const PDFDoltcini = () => {
 
             <View style={styles.tbody}>
               {order.map((item, index) => (
-                <View key={index} style={styles.spaceBetween}>
-                  <View style={[styles.row, styles.columnLarge]}>
-                    <Text>{item.productCode}</Text>
+                  <View key={index} style={[styles.spaceBetween, { marginBottom: 6 }]}>
+                    <View style={[styles.row, styles.columnLarge]}>
+                      <Text>{item.productCode}</Text>
+                    </View>
+                    <View style={[styles.row, styles.columnSmall]}>
+                      <Text>{item.price.toFixed(2)}</Text>
+                    </View>
+
+                    <View style={{ flex: 4 }}>
+                      {item.ordered.map((entry, i) => (
+                          <View
+                              key={i}
+                              style={[styles.spaceBetween, { marginLeft: 4, marginBottom: 2 }]}
+                          >
+                            <View style={[styles.row, styles.columnSmall]}>
+                              <Text>{entry.size}</Text>
+                            </View>
+                            <View style={[styles.row, styles.columnSmall]}>
+                              <Text>{entry.quantity}</Text>
+                            </View>
+                            <View style={[styles.row, styles.columnSmall]}>
+                              <Text>{(item.price * entry.quantity).toFixed(2)}</Text>
+                            </View>
+                          </View>
+                      ))}
+                    </View>
                   </View>
-                  <View style={[styles.row, styles.columnSmall]}>
-                    <Text>{item.price.toFixed(2)}</Text>
-                  </View>
-                  <View style={{ flex: 2.25 }}>
-                    {item.ordered.map((entry, index) => (
-                      <View
-                        key={index}
-                        style={{
-                          flexDirection: "row",
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        <View style={[styles.row, styles.columnSmall]}>
-                          <Text>{entry.size}</Text>
-                        </View>
-                        <View style={[styles.row, styles.columnSmall]}>
-                          <Text>{entry.quantity}</Text>
-                        </View>
-                        <View style={[styles.row, styles.columnSmall]}>
-                          <Text>
-                            {(item.price * entry.quantity).toFixed(2)}
-                          </Text>
-                        </View>
-                      </View>
-                    ))}
-                  </View>
-                </View>
               ))}
             </View>
 
@@ -154,8 +152,7 @@ export const PDFDoltcini = () => {
                 </View>
                 <View style={styles.row}>
                   <Text>
-                    Eindtotaal: {(costDoltcini + orderTotalPrice).toFixed(2)}{" "}
-                    EUR
+                    Eindtotaal: {(costDoltcini + orderTotalPrice).toFixed(2)} EUR
                   </Text>
                 </View>
               </View>
