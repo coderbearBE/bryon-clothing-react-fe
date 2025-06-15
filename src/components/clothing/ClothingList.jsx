@@ -27,11 +27,13 @@ import {
 
 export const ClothingList = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [filteredClothingItems, setFilteredClothingItems] = useState([]);
   const [currentOrderItems, setCurrentOrderItems] = useState([]);
   const [membershipFee, setMembershipFee] = useState(60);
   const [totalAmount, setTotalAmount] = useState(0);
   const [restAmount, setRestAmount] = useState(0);
+  const [textile, setTextile] = useState([]);
+  const [champion, setChampion] = useState([]);
+  const [accessories, setAccessories] = useState([]);
 
   const { get, post } = useAxios();
   const { user } = useContext(UserContext);
@@ -51,12 +53,9 @@ export const ClothingList = () => {
 
   useEffect(() => {
     if (clothingItems.length !== 0) {
-      setFilteredClothingItems(
-        clothingItems.filter(
-          (item) =>
-            item.retailFor === "DEFAULT" || item.retailFor === user.gender
-        )
-      );
+      setTextile(clothingItems.filter((item) => (item.retailFor === "DEFAULT" || item.retailFor === user.gender) && item.clothingType === 'TEXTILE' && !item.descriptionBryon.includes("KAMPIOEN")))
+      setChampion(clothingItems.filter((item) => (item.retailFor === "DEFAULT" || item.retailFor === user.gender) && item.clothingType === 'TEXTILE' && item.descriptionBryon.includes("KAMPIOEN")))
+      setAccessories(clothingItems.filter((item) => (item.retailFor === "DEFAULT" || item.retailFor === user.gender) && item.clothingType !== 'TEXTILE'))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clothingItems]);
@@ -192,7 +191,46 @@ export const ClothingList = () => {
         <VStack spacing={4} w="full" h="full" align="stretch">
           <Heading mb={4}>Kledij Bryon (Doltcini)</Heading>
 
-          {filteredClothingItems.map((item) => (
+          {/*{filteredClothingItems.map((item) => (*/}
+          <Heading size={'md'}>Kampioen</Heading>
+          {champion.map((item) => (
+              <div key={item.id}>
+                <Stack
+                    direction={["column", "column", "row", "row"]}
+                    justifyContent="space-between"
+                >
+                  <Text>{item.descriptionBryon}</Text>
+                  <HStack justifyContent="space-between">
+                    <Text w="120px" fontWeight="bold" mr={8}>
+                      {item.price.toFixed(2)} EUR
+                    </Text>
+                    <Select
+                        w="120px"
+                        placeholder="Maat.."
+                        {...register(`${item.productCode}.size`)}
+                    >
+                      {renderSelectOptions(item)}
+                    </Select>
+                    <Input
+                        type="number"
+                        w="80px"
+                        focusBorderColor="blackAlpha.300"
+                        placeholder="0 - 15"
+                        _placeholder={{ color: "blackAlpha.900" }}
+                        {...register(`${item.productCode}.quantity`, {
+                          min: 0,
+                          max: 15,
+                          value: 0,
+                          valueAsNumber: true,
+                        })}
+                    />
+                  </HStack>
+                </Stack>
+              </div>
+          ))}
+
+          <Heading size={'md'}>Truitjes en broeken</Heading>
+          {textile.map((item) => (
             <div key={item.id}>
               <Stack
                 direction={["column", "column", "row", "row"]}
@@ -226,6 +264,43 @@ export const ClothingList = () => {
                 </HStack>
               </Stack>
             </div>
+          ))}
+
+          <Heading size={'md'}>Accessoires</Heading>
+          {accessories.map((item) => (
+              <div key={item.id}>
+                <Stack
+                    direction={["column", "column", "row", "row"]}
+                    justifyContent="space-between"
+                >
+                  <Text>{item.descriptionBryon}</Text>
+                  <HStack justifyContent="space-between">
+                    <Text w="120px" fontWeight="bold" mr={8}>
+                      {item.price.toFixed(2)} EUR
+                    </Text>
+                    <Select
+                        w="120px"
+                        placeholder="Maat.."
+                        {...register(`${item.productCode}.size`)}
+                    >
+                      {renderSelectOptions(item)}
+                    </Select>
+                    <Input
+                        type="number"
+                        w="80px"
+                        focusBorderColor="blackAlpha.300"
+                        placeholder="0 - 15"
+                        _placeholder={{ color: "blackAlpha.900" }}
+                        {...register(`${item.productCode}.quantity`, {
+                          min: 0,
+                          max: 15,
+                          value: 0,
+                          valueAsNumber: true,
+                        })}
+                    />
+                  </HStack>
+                </Stack>
+              </div>
           ))}
 
           {!R.isEmpty(errors) && (
